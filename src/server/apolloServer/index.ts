@@ -1,7 +1,6 @@
 import { ApolloServer } from 'apollo-server-express'
-import typeDefs from './typeDefs'
-import resolvers from './resolvers'
+import { schema, dataSources } from './schemaAndDataSource'
 
-const index = new ApolloServer({ typeDefs, resolvers })
+const index = new ApolloServer({ schema, dataSources })
 
 export default index

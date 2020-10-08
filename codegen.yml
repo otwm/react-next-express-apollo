@@ -1,0 +1,14 @@
+overwrite: true
+schema: "http://localhost:3000/graphql"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - typescript
+      - typescript-resolvers
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      useIndexSignature: true
+      withComponent: true
+      avoidOptionals: true
+      maybeValue: T
