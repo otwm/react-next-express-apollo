@@ -1,10 +1,10 @@
 import { DataSource } from 'apollo-datasource'
 import consola from 'consola'
 
-const testUser = {
+const user1 = {
   id: 1,
-  accountId: 'test',
-  name: 'tester',
+  accountId: 'test1',
+  name: 'tester1',
   pass: '1234',
   email: 'test@gmail.com',
   bio: 'hello',
@@ -12,19 +12,43 @@ const testUser = {
   updateAt: null,
 }
 
+const user2 = {
+  id: 2,
+  accountId: 'test2',
+  name: 'tester2',
+  pass: '1234',
+  email: 'test@gmail.com',
+  bio: 'hello',
+  createAt: new Date(),
+  updateAt: null,
+}
+
+const user3 = {
+  id: 3,
+  accountId: 'test3',
+  name: 'tester3',
+  pass: '1234',
+  email: 'test@gmail.com',
+  bio: 'hello',
+  createAt: new Date(),
+  updateAt: null,
+}
+
+const users = [ user1, user2, user3 ]
+
 export default class UserAPI extends DataSource {
   constructor() {
     super()
   }
 
-  // @ts-ignore
   async findUserByAccountId (accountId) {
-    return await testUser
+    return users.find(user => {
+      return user.accountId === accountId
+    })
   }
 
-  // @ts-ignore
   async findUsersByName (name) {
-    return await testUser
+    return users.filter(user => user.name?.includes(name))
   }
 
   // @ts-ignore
