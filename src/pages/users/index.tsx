@@ -1,27 +1,34 @@
-import { useGetUsersQuery } from '../../generated/graphql'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import Link from 'next/link'
+import { useGetUsersLazyQuery } from '../../generated/graphql'
 
 const users = () => {
-  const [ text, setText ]= useState('')
-  const { loading, error, data } = useGetUsersQuery({ variables: { name: text } })
-
-  if (loading) return (<div>...loading</div>)
-  if (error) return (<div>Error </div>)
+  const [ text, setText ] = useState('')
+  const [ getUsers, { loading, data, error }] = useGetUsersLazyQuery({ variables: { name: text } })
 
   return (
     <div>
-      users : <input type="text" value={text} onChange={({ target: { value }}) => setText(value)}/>
-      <table>
-        <tbody>
-        { data.users.map(user =>
-          <tr key={user.id}>
-            <td>{user.accountId}</td>
-            <td>{user.name}</td>
-            <td>{user.email}</td>
-          </tr>
-        )}
-        </tbody>
-      </table>
+      { loading && <div>...loading</div> }
+      { error && <div>Error </div> }
+      {
+        <div>
+          users : <input type="text" value={text} onChange={({ target: { value }}) => {
+          setText(value)
+          getUsers({ variables: { name: value }})
+        }}/>
+          <table>
+            <tbody>
+            { data?.users?.map(user =>
+              <tr key={user.id}>
+                <td><Link href={`/users/${user.id}`}>{user.accountId}</Link></td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+              </tr>
+            )}
+            </tbody>
+          </table>
+        </div>
+      }
     </div>
   )
 }
