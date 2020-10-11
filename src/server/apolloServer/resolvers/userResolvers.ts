@@ -1,7 +1,8 @@
 const userResolvers = {
   Query: {
-    user: async (_, { accountId }, { dataSources }) => {
-      return await dataSources.userAPI.findUserByAccountId(accountId)
+    user: async (_, { id }, { dataSources }) => {
+      console.log('tttttere')
+      return await dataSources.userAPI.findUserById(id)
     },
     users: async (_, { name }, { dataSources }) => {
       return await dataSources.userAPI.findUsersByName(name)

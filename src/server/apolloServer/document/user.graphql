@@ -1,6 +1,6 @@
 ## 사용자 조회
-query getUser($accountId: String!) {
-    user(accountId: $accountId) {
+query getUser($id: ID!) {
+    user(id: $id) {
         ...UserData
     }
 }

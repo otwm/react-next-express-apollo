@@ -47,6 +47,11 @@ export default class UserAPI extends DataSource {
     })
   }
 
+  async findUserById (id) {
+    return users.find(user => {
+      return user.id === Number(id)
+    })
+  }
   async findUsersByName (name) {
     return users.filter(user => user.name?.includes(name))
   }

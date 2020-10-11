@@ -80,7 +80,7 @@ export type QueryLaunchArgs = {
 
 
 export type QueryUserArgs = {
-  accountId: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
@@ -276,7 +276,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   launches: Resolver<ResolversTypes['LaunchConnection'], ParentType, ContextType, RequireFields<QueryLaunchesArgs, never>>;
   launch: Resolver<Maybe<ResolversTypes['Launch']>, ParentType, ContextType, RequireFields<QueryLaunchArgs, 'id'>>;
   root: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'accountId'>>;
+  user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   users: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'name'>>;
 }>;
 
@@ -338,7 +338,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
 export type GetUserQueryVariables = Exact<{
-  accountId: Scalars['String'];
+  id: Scalars['ID'];
 }>;
 
 
@@ -401,8 +401,8 @@ export const UserDataFragmentDoc = gql`
 }
     `;
 export const GetUserDocument = gql`
-    query getUser($accountId: String!) {
-  user(accountId: $accountId) {
+    query getUser($id: ID!) {
+  user(id: $id) {
     ...UserData
   }
 }
@@ -426,7 +426,7 @@ export type GetUserComponentProps = Omit<ApolloReactComponents.QueryComponentOpt
  * @example
  * const { data, loading, error } = useGetUserQuery({
  *   variables: {
- *      accountId: // value for 'accountId'
+ *      id: // value for 'id'
  *   },
  * });
  */

@@ -1,17 +1,16 @@
 import React from 'react'
 import App from 'next/app'
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { ApolloProvider } from '@apollo/client'
+import apolloClient from '../utils/apolloClient'
 
-const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
-  cache: new InMemoryCache()
-});
+console.log(process.env.MY_TEST, process.env.NEXT_PUBLIC_ENV_VARIABLE)
 
 class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props
+    console.log(process.env.MY_TEST, process.env.NEXT_PUBLIC_ENV_VARIABLE)
     return (
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apolloClient}>
         <Component {...pageProps} />
       </ApolloProvider>
     )

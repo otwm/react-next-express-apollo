@@ -1,14 +1,31 @@
-import { useGetUserQuery } from '../../generated/graphql'
+import React from 'react'
+import { GetServerSideProps } from 'next'
+import { GetUserDocument, User } from '../../generated/graphql'
+import apolloClient from '../../utils/apolloClient'
 
-const userDetail = () => {
-  const { loading, error, data } = useGetUserQuery({ variables: { accountId: 'test1' }})
+interface UserDetailProps {
+  user: User
+}
+
+const userDetail = ({ user }: UserDetailProps) => {
   return (
     <>
-      { loading && <p>...loading</p> }
-      { error && <p>{error}</p> }
-      { Object.values(data?.user?? {}).join(', ') }
+      { Object.values(user).join(', ') }
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ params}) => {
+  const { id } = params
+  const { data } = await apolloClient.query({
+    query: GetUserDocument,
+    variables: id
+  })
+  return {
+    props: {
+      user: data?.user?? {},
+    }
+  }
 }
 
 export default userDetail
