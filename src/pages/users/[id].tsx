@@ -16,11 +16,11 @@ const userDetail = ({ user }: UserDetailProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params}) => {
-  const { id } = params
   const { data } = await apolloClient.query({
     query: GetUserDocument,
-    variables: id
+    variables: params
   })
+
   return {
     props: {
       user: data?.user?? {},

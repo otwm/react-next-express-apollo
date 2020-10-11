@@ -1,7 +1,6 @@
 const userResolvers = {
   Query: {
     user: async (_, { id }, { dataSources }) => {
-      console.log('tttttere')
       return await dataSources.userAPI.findUserById(id)
     },
     users: async (_, { name }, { dataSources }) => {
