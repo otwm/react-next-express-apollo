@@ -1,0 +1,32 @@
+## 사용자 조회
+query getUser($accountId: String!) {
+    user(accountId: $accountId) {
+        ...UserData
+    }
+}
+
+## 사용자 다수 조회
+query getUsers($name: String!) {
+    users(name: $name) {
+        ...UserData
+    }
+}
+
+## 로그인
+mutation login($accountId: String!, $pass: String!) {
+    login(accountId: $accountId, pass: $pass)
+}
+
+mutation addUser($user: String!) {
+  addUser(user: $user) {
+    success
+    message
+  }
+}
+
+fragment UserData on User {
+    id
+    accountId
+    name
+    email
+}
