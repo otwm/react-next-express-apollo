@@ -1,4 +1,4 @@
-import { DataSource } from 'apollo-datasource'
+import { DataSource, DataSourceConfig } from 'apollo-datasource'
 import consola from 'consola'
 
 const user1 = {
@@ -37,8 +37,13 @@ const user3 = {
 const users = [ user1, user2, user3 ]
 
 export default class UserAPI extends DataSource {
+  context
   constructor() {
     super()
+  }
+
+  initialize(config: DataSourceConfig<any>): void | Promise<void> {
+    this.context = config.context
   }
 
   async findUserByAccountId (accountId) {
@@ -56,12 +61,21 @@ export default class UserAPI extends DataSource {
     return users.filter(user => user.name?.includes(name))
   }
 
-  // @ts-ignore
   async login ({ accountId, pass }) {
-    return 'ok'
+    const user = users.find(user => {
+      return user.accountId === accountId && user.pass === pass
+    })
+    if (!user) throw new Error('login error')
+    return `${user?.accountId}${user?.id}`
   }
 
   async update () {
     consola.log('done')
+  }
+
+  async findUserByToken(token) {
+    return users.find(user => {
+      return `${user.accountId}${user.pass}` === token
+    })
   }
 }

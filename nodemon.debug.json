@@ -4,5 +4,5 @@
   "ext": "ts,js,json",
   "signal": "SIGINT",
   "ignore": [ "/**/*.spec.ts" ],
-  "exec": "ts-node --project tsconfig.json src/server/index.ts"
+  "exec": "TS_NODE_PROJECT=./tsconfig.json node --inspect-brk -r ts-node/register src/server/index.ts"
 }
